@@ -5,9 +5,6 @@
 package gl
 
 // #include "gl.h"
-// GLuint workaroundGlGetUniformBlockIndex(GLuint program, const GLchar* uniformBlockName) {
-//     return glGetUniformBlockIndex(program, uniformBlockName);
-// }
 import "C"
 import "unsafe"
 
@@ -34,24 +31,6 @@ func (program Program) GetAttachedShaders() []Object {
 
 func (program Program) DetachShader(shader Shader) {
 	C.glDetachShader(C.GLuint(program), C.GLuint(shader))
-}
-
-func (program Program) TransformFeedbackVaryings(names []string, buffer_mode GLenum) {
-	if len(names) == 0 {
-		C.glTransformFeedbackVaryings(C.GLuint(program), 0, (**C.GLchar)(nil), C.GLenum(buffer_mode))
-	} else {
-		gl_names := make([]*C.GLchar, len(names))
-
-		for i := range names {
-			gl_names[i] = glString(names[i])
-		}
-
-		C.glTransformFeedbackVaryings(C.GLuint(program), C.GLsizei(len(gl_names)), &gl_names[0], C.GLenum(buffer_mode))
-
-		for _, s := range gl_names {
-			freeString(s)
-		}
-	}
 }
 
 func (program Program) Link() { C.glLinkProgram(C.GLuint(program)) }
@@ -134,24 +113,6 @@ func (program Program) GetUniformLocation(name string) UniformLocation {
 	return UniformLocation(C.glGetUniformLocation(C.GLuint(program), cname))
 }
 
-func (program Program) GetUniformBlockIndex(name string) UniformBlockIndex {
-
-	cname := glString(name)
-	defer freeString(cname)
-
-	// Workaround bug in GLEW < 1.8 where glGetUniformBlockIndex expects
-	// a string of char instead of a string of GLchar.  We could ask everybody
-	// to bump their version of GLEW, or we could add a bit of C code that
-	// will silently cast GLchar into char.
-
-	//return UniformBlockIndex(C.glGetUniformBlockIndex(C.GLuint(program), cname))
-	return UniformBlockIndex(C.workaroundGlGetUniformBlockIndex(C.GLuint(program), cname))
-}
-
-func (program Program) UniformBlockBinding(index UniformBlockIndex, binding uint) {
-	C.glUniformBlockBinding(C.GLuint(program), C.GLuint(index), C.GLuint(binding))
-}
-
 func (program Program) GetAttribLocation(name string) AttribLocation {
 
 	cname := glString(name)
@@ -167,20 +128,4 @@ func (program Program) BindAttribLocation(index AttribLocation, name string) {
 
 	C.glBindAttribLocation(C.GLuint(program), C.GLuint(index), cname)
 
-}
-
-func (program Program) BindFragDataLocation(colorNumber int, name string) {
-
-	cname := glString(name)
-	defer freeString(cname)
-
-	C.glBindFragDataLocation(C.GLuint(program), C.GLuint(colorNumber), cname)
-}
-
-func (program Program) GetFragDataLocation(name string) int {
-
-	cname := glString(name)
-	defer freeString(cname)
-
-	return int(C.glGetFragDataLocation(C.GLuint(program), cname))
 }

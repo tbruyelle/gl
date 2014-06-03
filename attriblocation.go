@@ -55,7 +55,3 @@ func (indx AttribLocation) EnableArray() {
 func (indx AttribLocation) DisableArray() {
 	C.glDisableVertexAttribArray(C.GLuint(indx))
 }
-
-func (indx AttribLocation) AttribDivisor(divisor int) {
-	C.glVertexAttribDivisor(C.GLuint(indx), C.GLuint(divisor))
-}
