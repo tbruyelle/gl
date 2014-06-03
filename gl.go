@@ -83,8 +83,8 @@ uniformMatrix4fv
 
 // Main
 
-func BlendColor(red GLclampf, green GLclampf, blue GLclampf, alpha GLclampf) {
-	C.glBlendColor(C.GLclampf(red), C.GLclampf(green), C.GLclampf(blue), C.GLclampf(alpha))
+func BlendColor(red GLfloat, green GLfloat, blue GLfloat, alpha GLfloat) {
+	C.glBlendColor(C.GLfloat(red), C.GLfloat(green), C.GLfloat(blue), C.GLfloat(alpha))
 }
 
 func BlendEquation(mode GLenum) { C.glBlendEquation(C.GLenum(mode)) }
@@ -97,8 +97,8 @@ func BlendFuncSeparate(srcRGB GLenum, dstRGB GLenum, srcAlpha GLenum, dstAlpha G
 	C.glBlendFuncSeparate(C.GLenum(srcRGB), C.GLenum(dstRGB), C.GLenum(srcAlpha), C.GLenum(dstAlpha))
 }
 
-func SampleCoverage(value GLclampf, invert bool) {
-	C.glSampleCoverage(C.GLclampf(value), glBool(invert))
+func SampleCoverage(value GLfloat, invert bool) {
+	C.glSampleCoverage(C.GLfloat(value), glBool(invert))
 }
 
 func StencilFuncSeparate(face GLenum, func_ GLenum, ref int, mask uint) {
@@ -123,9 +123,9 @@ func Clear(mask GLbitfield) {
 	C.glClear(C.GLbitfield(mask))
 }
 
-//void glClearColor (GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)
-func ClearColor(red GLclampf, green GLclampf, blue GLclampf, alpha GLclampf) {
-	C.glClearColor(C.GLclampf(red), C.GLclampf(green), C.GLclampf(blue), C.GLclampf(alpha))
+//void glClearColor (GLfloat red, GLclampf green, GLclampf blue, GLclampf alpha)
+func ClearColor(red GLfloat, green GLfloat, blue GLfloat, alpha GLfloat) {
+	C.glClearColor(C.GLfloat(red), C.GLfloat(green), C.GLfloat(blue), C.GLfloat(alpha))
 }
 
 //void glClearStencil (int s)

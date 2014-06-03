@@ -1,7 +1,5 @@
-#define GL_GLEXT_PROTOTYPES 1
-
 #include <stdlib.h>
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#include <GLES2/gl2platform.h>
+#include <GLES3/gl3.h>
+#include <GLES3/gl3ext.h>
+#include <GLES3/gl3platform.h>
 
